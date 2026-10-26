@@ -2,25 +2,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debuguj aktywny plik",
+            "name": "Debug consoleApp",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/main",
             "args": [],
+            "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
             "externalConsole": true,
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
+            "preLaunchTask": "build consoleApp",
             "setupCommands": [
                 {
-                    "description": "Włącz pretty-printing dla gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ],
-            "preLaunchTask": "C/C++: g++ kompiluj aktywny plik"
+            ]
         }
     ]
 }
