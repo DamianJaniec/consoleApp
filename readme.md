@@ -42,7 +42,7 @@ Windows domyślnie uruchamia aplikacje w swojej nowej nakładce terminali która
 - poddać się i zaufać użytkownikowi że sam zmieni rozmiar
 Możemy odczytywać rozmiar okna więc, zaufanie polegałoby na tym
 aby wyświetlić wielki napis "ZWIĘKSZ ROZMIAR OKNA" który blokowałby
-nie znikałby i blokowałby aplikacje do momentu aż użytkownik łaskawie zmieniłby rozmiar okna
+aplikacje do momentu aż użytkownik łaskawie zmieniłby rozmiar okna
 
 ### Rysowanie
 Dodać rysowanie lini, prostych kształtów np.
