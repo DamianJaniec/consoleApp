@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug consoleApp",
+            "name": "Debug consoleApp (Linux)",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main",
@@ -19,6 +19,17 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        {
+            "name": "Debug consoleApp (Windows)",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\main.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal",
+            "preLaunchTask": "build consoleApp (Windows)"
         }
     ]
 }

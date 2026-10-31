@@ -22,7 +22,7 @@ namespace engine
     };
     struct Cell
     {
-        char c = ' ';
+        char32_t c = ' ';
         Color fg = {255,255,255};
         Color bg = {0,0,0};
 

@@ -1,1 +1,6 @@
 main
+*.obj
+*.exe
+*.pdb
+*.ilk
+build/

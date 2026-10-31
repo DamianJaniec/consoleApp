@@ -1,4 +1,5 @@
 #include "include/canvas.h"
+#include "include/utf8.h"
 
 namespace engine
 {
@@ -43,8 +44,10 @@ namespace engine
     }
     void Canvas::drawText(Vec2i coords, const std::string &text, Color fg, Color bg)
     {
-        for(int i=0; i<text.length(); i++)
-            setCell({coords.x+i,coords.y},{text[i],fg,bg});
+        std::u32string chars = utf8::decode(text);
+        for(int i=0; (int)i<chars.size(); i++)
+            setCell({coords.x + i, coords.y},{chars[i],fg,bg});
+            //setCell({coords.x+i,coords.y},{text[i],fg,bg});
     }
     void Canvas::drawLine(Vec2i coords, Vec2i target, Cell c)
     {

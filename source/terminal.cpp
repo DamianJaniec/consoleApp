@@ -3,6 +3,8 @@
 
 #ifdef _WIN32
     #include <conio.h>  //kbhit, _getch_
+    #include <timeapi.h>
+    #pragma comment(lib, "winmm.lib")
 #else
     #include <unistd.h> //read STDIN_FILENO
     #include <sys/ioctl.h> //ioctl
@@ -19,6 +21,8 @@ namespace engine
         //1^20 ~ 1M bjatów czyli 1MB
 
         #ifdef _WIN32
+        timeBeginPeriod(1); //ustawienie dokladzniejszego timera
+
         HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
         HANDLE in  = GetStdHandle(STD_INPUT_HANDLE);
 
@@ -60,6 +64,8 @@ namespace engine
 
         // potem przywracamy ustawienia sprzed startu
     #ifdef _WIN32
+        timeEndPeriod(1);
+    
         SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), m_oldOutMode);
         SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE),  m_oldInMode);
         SetConsoleOutputCP(m_oldCodePage);

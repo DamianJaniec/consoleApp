@@ -1,5 +1,8 @@
 #include "include/renderer.h"
 #include "include/ansi.h"
+#include "include/utf8.h"
+
+#include <cstdio>
 
 namespace engine
 {
@@ -60,7 +63,11 @@ namespace engine
             m_lastFg = cell.fg;
             ansi::setFg(cell.fg);
         }
-        putchar(cell.c);
+        
+        //putchar(cell.c);
+        std::string bytes;
+        utf8::encode(cell.c, bytes);
+        fwrite(bytes.data(), 1, bytes.size(), stdout);
         
         if(coords.x == m_previous.getSize().x - 1)
             m_cursor = {-1, -1};

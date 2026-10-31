@@ -12,10 +12,7 @@
                 "-Wall", "-Wextra",
                 "-I${workspaceFolder}",
                 "${workspaceFolder}/main.cpp",
-                "${workspaceFolder}/source/terminal.cpp",
-                "${workspaceFolder}/source/canvas.cpp",
-                "${workspaceFolder}/source/renderer.cpp",
-                "${workspaceFolder}/source/ansi.cpp",
+                "${workspaceFolder}/source/*.cpp",
                 "-o",
                 "${workspaceFolder}/main"
             ],
@@ -34,10 +31,7 @@
                 "/I${workspaceFolder}",
                 "/Fe${workspaceFolder}\\main.exe",
                 "${workspaceFolder}\\main.cpp",
-                "${workspaceFolder}\\source\\terminal.cpp",
-                "${workspaceFolder}\\source\\canvas.cpp",
-                "${workspaceFolder}\\source\\renderer.cpp",
-                "${workspaceFolder}\\source\\ansi.cpp"
+                "${workspaceFolder}\\source\\*.cpp"
             ],
             "options": { "cwd": "${workspaceFolder}" },
             "problemMatcher": ["$msCompile"],
