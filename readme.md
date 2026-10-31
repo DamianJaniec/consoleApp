@@ -29,9 +29,6 @@ Wystarczy konsola. (w przypadku win wymagane włączenie wirtualizacji)
 ### do kończyć funkcje w canvie
 Funckja draw Line, powinna rysować linie, na razie nie robi nic
 
-### dowiedzieć się jak dokładnie działają include w linux
-tak jak w temacie
-
 
 ### Resize
 Gdy pisałem ostatnio projekt wykorzystujący podobne rozwiązania, przy windowsie pojawił się pewien problem, związany z zmianą rozmiaru buffora oraz tekstu - windows domyślnie nie otwierał "starego" typu konsolii na którym taka zmiana jest możliwa tylko coś w rodzaju nowej nakładki 

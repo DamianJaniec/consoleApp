@@ -99,4 +99,23 @@ namespace engine
     {
         fflush(stdout);
     }
+    void Terminal::requestSize(Vec2i s)
+    {
+    #ifdef _WIN32
+        HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+        COORD max = GetLargestConsoleWindowSize(out);   // ile się zmieści na ekranie
+        if (s.x > max.X) s.x = max.X;
+        if (s.y > max.Y) s.y = max.Y;
+
+        SMALL_RECT tiny = {0, 0, 1, 1};                  // najpierw zmniejsz okno,
+        SetConsoleWindowInfo(out, TRUE, &tiny);          // bo bufor nie może być mniejszy od okna
+        COORD buf = {(SHORT)s.x, (SHORT)s.y};
+        SetConsoleScreenBufferSize(out, buf);
+        SMALL_RECT win = {0, 0, (SHORT)(s.x - 1), (SHORT)(s.y - 1)};
+        SetConsoleWindowInfo(out, TRUE, &win);
+    #else
+        printf("\x1b[8;%d;%dt", s.y, s.x);               // xterm: "ustaw rozmiar okna"
+        flush();
+    #endif
+    }
 }

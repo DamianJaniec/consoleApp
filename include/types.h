@@ -1,5 +1,7 @@
 #pragma once
 
+//Podstawoe struktury
+
 namespace engine
 {
     struct Color
@@ -29,7 +31,7 @@ namespace engine
 
 
 
-    //operatory
+    //operatory porownania Color, Cell oraz Vec2i
     inline bool operator==(const Color& a, const Color& b)
     {
         return a.r == b.r && a.g == b.g && a.b == b.b;

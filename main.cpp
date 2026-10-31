@@ -7,6 +7,8 @@
 #include <thread>
 #include <chrono>
 
+engine::Vec2i windowSize = {150,30};
+
 int main()
 {
     //graph::consoleInit();
@@ -18,15 +20,20 @@ int main()
     engine::Terminal term;
     engine::Canvas canva;
 
-    canva.setSize(term.size());
+    term.requestSize(windowSize);
+    canva.setSize(windowSize);
+    //canva.setSize({120,30});
+    
+
 
     engine::Renderer render(term);
 
-    int r = 0; 
-    int g = 0;
-    int b = 0;
+    int r = 0, g = 0, b = 0;
+    int dr = 1, dg = 2, db = 3;   // prędkość i kierunek każdego kanału
     bool running = true;
     
+
+
 
     while(running)
     {
@@ -41,14 +48,19 @@ int main()
         engine::Cell c = {' ',fg,bg};
         canva.fillRect({0,0},term.size().x,term.size().y,c);
 
-        r+=1; g+=2; b+=3;
+        r += dr; g += dg; b += db;
 
-        if(r>255) r = 0;
-        if(g>255) g = 0;
-        if(b>255) b = 0;
+        if (r > 255 || r < 0) { dr = -dr; r += 2 * dr; }
+        if (g > 255 || g < 0) { dg = -dg; g += 2 * dg; }
+        if (b > 255 || b < 0) { db = -db; b += 2 * db; }
 
         render.present(canva);
         std::this_thread::sleep_for(std::chrono::milliseconds(33)); //tyczasowe (?)
+
+        engine::Vec2i size = term.size();
+        if (size != canva.getSize())//resize uzytkownika
+            canva.setSize(size); 
+        
     }
     return 0;
 }

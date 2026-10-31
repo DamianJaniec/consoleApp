@@ -2,10 +2,6 @@
 
 namespace engine
 {
-    Canvas::Canvas()
-    {
-
-    }
     void Canvas::setSize(Vec2i _size)
     {
         size = _size;

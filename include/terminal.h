@@ -7,6 +7,7 @@
     #include <termios.h>
 #endif
 
+//Obsluga konsoli
 
 namespace engine
 {
@@ -22,6 +23,8 @@ namespace engine
         Vec2i size() const; //rozmiar okna
         bool readByte(char &out); //funkcja analogiczna do kbhit, ale uniwersalna dla win oraz linux
         void flush(); //wypachanie bufora na ekran
+
+        void requestSize(Vec2i s); //Fizyczny rozmiar okna, to co widac
 
         private:
         #ifdef _WIN32 //zmienna na stare ustawienia terminala
