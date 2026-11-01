@@ -4,6 +4,8 @@
 #include "include/renderer.h"
 #include "include/clock.h"
 #include "include/input.h"
+#include "include/texture.h"
+#include "include/ascii.h"
 //#include "include/graph.h"
 
 #include <string>
@@ -36,6 +38,12 @@ int main()
     bool running = true;
     float dt = 0; // delta time
 
+    engine::Cell hash;
+    hash.c = U'#';
+    hash.fg = {90,120,180};
+
+    engine::Texture testrgb("assets/testrgb.txt");
+    engine::Ascii   test("assets/test.txt");
 
 
     while(running)
@@ -74,14 +82,25 @@ int main()
 
         canva.drawText({0, 3}, "Zażółć gęślą jaźń", {255,255,255}, {0,0,0});
 
-        for (int x = 0; x < 20; x++)
-        {
-            engine::Cell d;
-            d.c  = U'▀';
-            d.fg = {255, 0, 0};   // górny "piksel"
-            d.bg = {0, 0, 255};   // dolny "piksel"
-            canva.setCell({x, 5}, d);
-        }
+        for (int y = 0; y < 10; y++)
+            for (int x = 0; x < 10; x++)
+                canva.setPixel({5 + x, 10 + y}, {255, 255, 255});
+
+        canva.drawRect({0,6}, {10,10},hash);
+        canva.drawCirclePx({40,15},10,{255,155,55});
+        canva.fillRectPx({80,15},{15,15},{0,120,255});
+
+
+        if (testrgb.empty())
+            canva.drawText({0, 12}, "Nie wczytano testrgb.txt", {255,0,0}, {0,0,0});
+        else
+            canva.drawTexturePx({10, 40}, testrgb);
+
+        if (test.empty())
+            canva.drawText({0, 12}, "Nie wczytano test.txt", {255,0,0}, {0,0,0});
+        else
+            canva.drawAscii({30, 20}, test, {255, 255, 0});
+
 
         render.present(canva);
 

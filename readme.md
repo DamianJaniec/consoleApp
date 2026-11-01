@@ -2,19 +2,39 @@
 
 ## Spis treści
 - [Opis projektu]
+- [Możliwości]
 - [Ostatnie zmiany]
 - [Wymagania wstępne]
-- [Nowe problemy i cele]
+- [Znane problemy i decyzje]
+- [Plany]
 
 ---
-
-## Opis projektu - 0.2.0
+## Opis projektu - 0.3.0
 Projekt ma na celu, wyciśnięcia z cmd tego co jest możliwe, służąc również jako projekt do samorozwoju.
 
+## Możliwości
+
+- Kolory RGB - true color, domyślnie kolory w konsoli przyjmuja tylko 16 wartosci
+- Renderer - Nie rysujemy calego ekranu w kazdej klate, pierw są sprawdzane różnice między klatką bieżącą a następną
+i rysowane jest tylko to się zmieniło
+- Rysowanie w trybie pixelowym - korzystając z właściwości utf8 mamy do dyspozycji znak '▀', manipulując kolorami jesteśmy
+w stanie uzyskać rysowanie pixelowe
+- Rysowanie prostych kształtów
+- Rysowanie Textur (pixelowe jak i ASCII)
+- Input - rozróżnienie na pojedycze wciśnięcia jak i przytrzymanie klawiszy
+- Zegar - stała dt między klatkami
+- Resize - zmiana rozmiaru okna przez użytkownika jest obsłużona, natomiast, wymuszenie zmianny na windowsie nie jest możliwe
+
+
 ## Ostatnie zmiany
+0.3.0
+- Tryb pixelowy (Halfblock)
+- Kształty (linia, prostokat, okrag, kolo) - na znakach jak i pixelach
+- Textury rgb
+- Ascii 
 0.2.0
 Dodano:
-- Zegar FPS
+- Zegar FPS - staly dt
 - Prosty Resize - więcej pod "nowe problemy i cele"
 - Input - kliknięcie, i przytrzymanie
 - Unicode - utf8, polskie znaki, znaki specjalne jak: '▀'
@@ -31,7 +51,7 @@ Dodano:
 ## Wymagania wstępne
 Wystarczy konsola. (w przypadku win wymagane włączenie wirtualizacji)
 
-## Nowe problemy i cele
+## Znane problemy i decyzje
 
 ### Resize
 W przypadku linux nie ma problemu, w przypadku windows problem jest.
@@ -44,14 +64,7 @@ Możemy odczytywać rozmiar okna więc, zaufanie polegałoby na tym
 aby wyświetlić wielki napis "ZWIĘKSZ ROZMIAR OKNA" który blokowałby
 nie znikałby i blokowałby aplikacje do momentu aż użytkownik łaskawie zmieniłby rozmiar okna
 
-### Rysowanie
-Dodać rysowanie lini, prostych kształtów np.
-- koło
-- okrąg
-- prostokąt pusty w środku
-- prostokąt wypełniony
-- linie pod różnymi kątami
-Ale też proste textury ASCII (najpewnij z plików .txt)
+## Plany
 
 ### Polskie znaki, w input
 Tak jak w temacie, zająć się polskimi znakami w input
@@ -64,6 +77,7 @@ Poczytać czy wgl możliwe jest jakakolwiek obsługa audio (jakaś musi istnieć
 - Debug Overlay (np. fps)
 - Obsługa Myszy
 - Sceny / stan gry (ale to za milion lat)
+- textury pixel rgb z bitmapy
 
 
 
