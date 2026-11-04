@@ -9,7 +9,7 @@
 - [Plany]
 
 ---
-## Opis projektu - 0.3.2
+## Opis projektu - 0.3.3
 Projekt ma na celu, wyciśnięcia z cmd tego co jest możliwe, służąc również jako projekt do samorozwoju.
 
 ## Możliwości
@@ -27,6 +27,11 @@ w stanie uzyskać rysowanie pixelowe
 
 
 ## Ostatnie zmiany
+0.3.3
+- Wymuszenie resize
+- Utworzenie Log
+
+
 0.3.2
 - Animacje
 - Odczyt Png

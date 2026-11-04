@@ -6,4 +6,5 @@
 #include "include/texture.h"
 #include "include/ascii.h"
 #include "include/animation.h"
+#include "include/app.h"
 

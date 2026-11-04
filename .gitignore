@@ -4,3 +4,4 @@ main
 *.pdb
 *.ilk
 build/
+log.txt

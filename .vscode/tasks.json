@@ -17,7 +17,7 @@
                 "${workspaceFolder}/main"
             ],
             "problemMatcher": ["$gcc"],
-            "group": { "kind": "build", "isDefault": true }
+            "group": { "kind": "build"}
         },
         {
             "label": "build consoleApp (Windows)",

@@ -2,6 +2,7 @@
 #include "include/types.h"
 
 #ifdef _WIN32
+    #define NOMINMAX            // windows.h nie definiuje makr min/max (psuja std::max)
     #include <windows.h>
 #else
     #include <termios.h>

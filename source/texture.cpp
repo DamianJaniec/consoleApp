@@ -82,8 +82,9 @@ namespace engine
                 else
                 {
                     std::istringstream nums(line.substr(1));
-                    int r = std::stoi(first), g = 0, b = 0; //r juz zczytalismy
-                    nums>>r>>g>>b;
+                    int r, g, b;
+                    if(!(nums >> r >> g >> b))   // nie udalo sie wczytac 3 liczb -> zla linijka
+                        continue;                // pomijamy ja zamiast wywalac program
                     palette[key] = {{r,g,b},true};
                 }
                 
