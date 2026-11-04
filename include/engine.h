@@ -1,0 +1,9 @@
+#include "include/terminal.h"
+#include "include/canvas.h"
+#include "include/renderer.h"
+#include "include/clock.h"
+#include "include/input.h"
+#include "include/texture.h"
+#include "include/ascii.h"
+#include "include/animation.h"
+

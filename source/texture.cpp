@@ -4,6 +4,9 @@
 #include <sstream>
 #include <unordered_map>
 
+#define STB_IMAGE_IMPLEMENTATION 
+#include "include/stb_image.h"
+
 namespace engine
 {
     Texture::Texture(const std::string& path)
@@ -11,6 +14,36 @@ namespace engine
         load(path);
     }
     bool Texture::load(const std::string& path)
+    {
+        if(path.size() >= 4 && path.substr(path.size() - 4) == ".txt")
+            return loadTxt(path);
+        else
+            return loadImage(path);
+    }
+    bool Texture::loadImage(const std::string& path)
+    {
+        m_size = {0,0};
+        m_pixels.clear();
+        m_visible.clear();
+
+        int w, h, n;
+        unsigned char* data = stbi_load(path.c_str(), &w, &h, &n, 4);//rgba
+        if(!data) 
+            return false;
+        m_size = {w,h};
+        m_pixels.resize(w*h);
+        m_visible.resize(w*h);
+
+        for(int i=0; i<w*h; i++)
+        {
+            m_pixels[i] = {data[i*4],data[i*4+1],data[i*4+2]};
+            m_visible[i] = data[i*4 +3] >=128; //pol przexroczyste to juz u nas przexroczyste
+        }
+        stbi_image_free(data);
+        return true;
+
+    }
+    bool Texture::loadTxt(const std::string& path)
     {
         m_size={0,0};
         m_pixels.clear();

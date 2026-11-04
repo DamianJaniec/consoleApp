@@ -163,35 +163,37 @@ namespace engine
 
     void Canvas::drawTexturePx(Vec2i coords, Vec2i _size, const Texture &tex)
     {
-        Vec2i ts = tex.size();
-        if(_size.x == 0 || _size.y==0 || tex.empty())
-            return;
-        
-        bool flipX = _size.x < 0, flipY = _size.y < 0;
-        int w = std::abs(_size.x), h = std::abs(_size.y);
+        drawTexturePartPx(coords, tex, {0, 0, tex.size().x, tex.size().y}, _size);
+    }
+    void Canvas::drawTexturePartPx(Vec2i coords, const Texture& tex, Recti src, Vec2i dstSize)
+    {
+        if(src.w <= 0 || src.h <= 0 || dstSize.x == 0 || dstSize.y == 0)
+        return;
+
+        bool flipX = dstSize.x < 0, flipY = dstSize.y < 0;
+        int w = std::abs(dstSize.x), h = std::abs(dstSize.y);
 
         Vec2i ps = pixelSize();
-        int x0 = std::max(0, -coords.x), x1 = std::min(w,ps.x-coords.x);
-        int y0 = std::max(0,-coords.y), y1 = std::min(w,ps.y-coords.y);
+        int x0 = std::max(0, -coords.x), x1 = std::min(w, ps.x - coords.x);
+        int y0 = std::max(0, -coords.y), y1 = std::min(h, ps.y - coords.y);
 
         for(int y = y0; y < y1; y++)
         {
-            int ty = flipY ? (w-1-y) : y;
-            int sy = (ty*ts.y ) / h;
+            int ty = flipY ? (h - 1 - y) : y;
+            int sy = src.y + (ty * src.h) / h;
 
-            for(int x = x0; x<x1; x++)
+            for(int x = x0; x < x1; x++)
             {
-                int tx = flipX ? (w-1-x) : x;
-                int sx = (tx * ts.x) / w;
+                int tx = flipX ? (w - 1 - x) : x;
+                int sx = src.x + (tx * src.w) / w;
 
-                if(!tex.visible({sx,sy}))
+                if(!tex.visible({sx, sy}))
                     continue;
-                setPixel({coords.x + x, coords.y + y}, tex.colorAt({sx,sy}));
+                setPixel({coords.x + x, coords.y + y}, tex.colorAt({sx, sy}));
             }
         }
-
+        
     }
-
 
     Vec2i Canvas::pixelSize() const
     {

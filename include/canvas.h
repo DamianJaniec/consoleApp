@@ -47,6 +47,11 @@ namespace engine
         
         void drawTexturePx(Vec2i coords, const Texture& tex); //skala 1:1
         void drawTexturePx(Vec2i coords, Vec2i size, const Texture& tex); //skalowanie do rozmiaryu
+        void drawTexturePartPx(Vec2i coords, const Texture& tex, Recti src, Vec2i dstSize); //wycinek obrazka (przyda sie do animacji)
+        //coord - gdzie rysowac na erkanie
+        //tex - co rysowac
+        //src - skad z obrazka wziac rysunek (coord plus wymiary)
+        //dstSize - skala rysunku
 
         private: 
         struct Brush

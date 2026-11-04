@@ -1,12 +1,6 @@
 #include <iostream>
-#include "include/terminal.h"
-#include "include/canvas.h"
-#include "include/renderer.h"
-#include "include/clock.h"
-#include "include/input.h"
-#include "include/texture.h"
-#include "include/ascii.h"
-//#include "include/graph.h"
+#include "include/engine.h"
+
 
 #include <string>
 
@@ -45,6 +39,17 @@ int main()
     engine::Texture testrgb("assets/testrgb.txt");
     engine::Ascii   test("assets/test.txt");
 
+    engine::Texture slimeTex("assets/slime.png");
+    engine::Animation slimeJump(&slimeTex, {16, 16}, 4, 12.0f);
+
+    engine::Sprite slime;
+    slime.anim = &slimeJump;
+    slime.pos = {100,42};
+
+    engine::Sprite bigSlime;
+    bigSlime.anim = &slimeJump;
+    bigSlime.pos = {116,26};
+    bigSlime.scale = 2;
 
     while(running && !engine::Terminal::quitRequested())
     {
@@ -106,6 +111,19 @@ int main()
         canva.drawTexturePx({30, 30}, {33, 27}, testrgb);    // 3×
         canva.drawTexturePx({70, 30}, {-22, 18}, testrgb);   // 2× + lustro
         canva.drawTexturePx({100, 30}, {6, 5}, testrgb);     // pomniejszenie
+
+        if (inp.held('a')) { slime.pos.x -= 1; slime.flipX = false;  }
+        if (inp.held('d')) { slime.pos.x += 1; slime.flipX = true; }
+
+        slimeJump.update(dt); 
+        if (slimeTex.empty())
+            canva.drawText({0, 13}, "Nie wczytano slime.txt", {255,0,0}, {0,0,0});
+        else
+        {
+            slime.draw(canva);
+            bigSlime.draw(canva);
+        }
+
 
         render.present(canva);
 

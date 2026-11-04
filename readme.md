@@ -9,7 +9,7 @@
 - [Plany]
 
 ---
-## Opis projektu - 0.3.1
+## Opis projektu - 0.3.2
 Projekt ma na celu, wyciśnięcia z cmd tego co jest możliwe, służąc również jako projekt do samorozwoju.
 
 ## Możliwości
@@ -27,6 +27,11 @@ w stanie uzyskać rysowanie pixelowe
 
 
 ## Ostatnie zmiany
+0.3.2
+- Animacje
+- Odczyt Png
+
+
 0.3.1
 - Ctrl + c
 - Skalowanie textur
@@ -82,7 +87,6 @@ Poczytać czy wgl możliwe jest jakakolwiek obsługa audio (jakaś musi istnieć
 - Debug Overlay (np. fps)
 - Obsługa Myszy
 - Sceny / stan gry (ale to za milion lat)
-- textury pixel rgb z bitmapy
 
 
 

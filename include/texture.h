@@ -13,6 +13,8 @@ namespace engine
         explicit Texture(const std::string& path);
 
         bool load(const std::string &path);
+        bool loadTxt(const std::string &path);
+        bool loadImage(const std::string &path);
 
         Vec2i size() const {return m_size;}
         bool empty() const {return m_size.x == 0 || m_size.y==0;}
