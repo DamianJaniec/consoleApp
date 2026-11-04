@@ -2,6 +2,7 @@
 #include "include/utf8.h"
 
 #include <cstdlib>   // std::abs
+#include <algorithm>
 
 namespace engine
 {
@@ -134,14 +135,15 @@ namespace engine
 
     void Canvas::drawTexturePx(Vec2i coords, const Texture& tex)
     {
-        Vec2i ts = tex.size();
-        for (int y=0; y<ts.y; y++)
-            for(int x=0; x<ts.x; x++)
-            {
-                if(!tex.visible({x,y}))
-                    continue;
-                setPixel({coords.x + x, coords.y + y},tex.colorAt({x,y}));
-            }
+        // Vec2i ts = tex.size();
+        // for (int y=0; y<ts.y; y++)
+        //     for(int x=0; x<ts.x; x++)
+        //     {
+        //         if(!tex.visible({x,y}))
+        //             continue;
+        //         setPixel({coords.x + x, coords.y + y},tex.colorAt({x,y}));
+        //     }
+        drawTexturePx(coords,tex.size(),tex);
     }
     void Canvas::drawAscii(Vec2i coords, const Ascii& tex,Color fg)
     {
@@ -159,6 +161,36 @@ namespace engine
             }
     }
 
+    void Canvas::drawTexturePx(Vec2i coords, Vec2i _size, const Texture &tex)
+    {
+        Vec2i ts = tex.size();
+        if(_size.x == 0 || _size.y==0 || tex.empty())
+            return;
+        
+        bool flipX = _size.x < 0, flipY = _size.y < 0;
+        int w = std::abs(_size.x), h = std::abs(_size.y);
+
+        Vec2i ps = pixelSize();
+        int x0 = std::max(0, -coords.x), x1 = std::min(w,ps.x-coords.x);
+        int y0 = std::max(0,-coords.y), y1 = std::min(w,ps.y-coords.y);
+
+        for(int y = y0; y < y1; y++)
+        {
+            int ty = flipY ? (w-1-y) : y;
+            int sy = (ty*ts.y ) / h;
+
+            for(int x = x0; x<x1; x++)
+            {
+                int tx = flipX ? (w-1-x) : x;
+                int sx = (tx * ts.x) / w;
+
+                if(!tex.visible({sx,sy}))
+                    continue;
+                setPixel({coords.x + x, coords.y + y}, tex.colorAt({sx,sy}));
+            }
+        }
+
+    }
 
 
     Vec2i Canvas::pixelSize() const

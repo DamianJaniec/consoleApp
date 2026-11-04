@@ -43,8 +43,10 @@ namespace engine
         void drawCirclePx(Vec2i coords, int radius, Color c);
         void fillCirclePx(Vec2i coords, int radius, Color c);
 
-        void drawTexturePx(Vec2i coords, const Texture& tex);
         void drawAscii(Vec2i coords, const Ascii& tex, Color fg);
+        
+        void drawTexturePx(Vec2i coords, const Texture& tex); //skala 1:1
+        void drawTexturePx(Vec2i coords, Vec2i size, const Texture& tex); //skalowanie do rozmiaryu
 
         private: 
         struct Brush

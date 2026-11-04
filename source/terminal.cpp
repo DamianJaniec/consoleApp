@@ -1,5 +1,6 @@
 #include "include/terminal.h" //windows.h termios.h
 #include <cstdio>
+#include <atomic>
 
 #ifdef _WIN32
     #include <conio.h>  //kbhit, _getch_
@@ -8,10 +9,33 @@
 #else
     #include <unistd.h> //read STDIN_FILENO
     #include <sys/ioctl.h> //ioctl
+    #include <csignal>
 #endif
 
 namespace engine
 {
+    std::atomic<bool> g_quit{false};
+    static_assert(std::atomic<bool>::is_always_lock_free,"atomic<bool> musi byc lock-free aby byl bezpieczny w handlerze");
+
+    #ifdef _WIN32
+        BOOL WINAPI ctrlHandler(DWORD type)
+        {
+            switch(type)
+            {
+                case CTRL_C_EVENT:
+                case CTRL_BREAK_EVENT:
+                    g_quit = true;
+                    return true;
+                default:
+                    return false;
+            }
+        }
+    #else
+        void signalHandler(int) {g_quit = true;}
+    #endif
+
+    bool Terminal::quitRequested() {return g_quit;}
+
     Terminal::Terminal()
     {
         setvbuf(stdout,nullptr,_IOFBF,1 << 20);
@@ -22,6 +46,7 @@ namespace engine
 
         #ifdef _WIN32
         timeBeginPeriod(1); //ustawienie dokladzniejszego timera
+        SetConsoleCtrlHandler(ctrlHandler, TRUE);
 
         HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
         HANDLE in  = GetStdHandle(STD_INPUT_HANDLE);
@@ -39,6 +64,14 @@ namespace engine
 
 
         #else
+            struct sigaction sa{};
+            sa.sa_handler = signalHandler;
+            sigemptyset(&sa.sa_mask);
+            sigaction(SIGINT,  &sa, nullptr);  // Ctrl+C
+            sigaction(SIGTERM, &sa, nullptr);  // kill
+            sigaction(SIGHUP,  &sa, nullptr);  // zamkniecie terminala
+        
+        
             tcgetattr(STDIN_FILENO, &m_oldSettings); //obecne ustawienia ternminala
 
             termios raw = m_oldSettings;
@@ -65,12 +98,16 @@ namespace engine
         // potem przywracamy ustawienia sprzed startu
     #ifdef _WIN32
         timeEndPeriod(1);
-    
+        SetConsoleCtrlHandler(ctrlHandler, FALSE);
+
         SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), m_oldOutMode);
         SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE),  m_oldInMode);
         SetConsoleOutputCP(m_oldCodePage);
     #else
         tcsetattr(STDIN_FILENO, TCSANOW, &m_oldSettings);
+        signal(SIGINT,  SIG_DFL);
+        signal(SIGTERM, SIG_DFL);
+        signal(SIGHUP,  SIG_DFL);
     #endif
     }
     Vec2i Terminal::size() const
@@ -95,6 +132,7 @@ namespace engine
         if (!_kbhit())
             return false;
         out = static_cast<char>(_getch());
+        if(out ==3) {g_quit = true; return false;} //Ctrl_c
         return true;
     #else
         return read(STDIN_FILENO, &out, 1) == 1;

@@ -46,7 +46,7 @@ int main()
     engine::Ascii   test("assets/test.txt");
 
 
-    while(running)
+    while(running && !engine::Terminal::quitRequested())
     {
         inp.update();
         if(inp.pressed('q'))
@@ -101,6 +101,11 @@ int main()
         else
             canva.drawAscii({30, 20}, test, {255, 255, 0});
 
+
+        canva.drawTexturePx({10, 40}, testrgb);              // 1:1
+        canva.drawTexturePx({30, 30}, {33, 27}, testrgb);    // 3×
+        canva.drawTexturePx({70, 30}, {-22, 18}, testrgb);   // 2× + lustro
+        canva.drawTexturePx({100, 30}, {6, 5}, testrgb);     // pomniejszenie
 
         render.present(canva);
 

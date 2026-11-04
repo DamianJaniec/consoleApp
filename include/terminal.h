@@ -26,6 +26,8 @@ namespace engine
 
         void requestSize(Vec2i s); //Fizyczny rozmiar okna, to co widac
 
+        static bool quitRequested();   //true po ctrl c
+
         private:
         #ifdef _WIN32 //zmienna na stare ustawienia terminala
             DWORD m_oldOutMode = 0;
