@@ -165,7 +165,7 @@ namespace engine
     {
         drawTexturePartPx(coords, tex, {0, 0, tex.size().x, tex.size().y}, _size);
     }
-    void Canvas::drawTexturePartPx(Vec2i coords, const Texture& tex, Recti src, Vec2i dstSize)
+    void Canvas::drawTexturePartPx(Vec2i coords, const Texture& tex, Recti src, Vec2i dstSize, float opacity)
     {
         if(src.w <= 0 || src.h <= 0 || dstSize.x == 0 || dstSize.y == 0)
         return;
@@ -189,7 +189,8 @@ namespace engine
 
                 if(!tex.visible({sx, sy}))
                     continue;
-                setPixel({coords.x + x, coords.y + y}, tex.colorAt({sx, sy}));
+                //setPixel({coords.x + x, coords.y + y}, tex.colorAt({sx, sy}));
+                blendPixel({coords.x + x,coords.y + y},tex.colorAt({sx,sy}),opacity);
             }
         }
         
@@ -232,6 +233,10 @@ namespace engine
             return cell.bg;
 
         return (coords.y % 2 == 0) ? cell.fg : cell.bg;
+    }
+    void Canvas::blendPixel(Vec2i coords, Color color, float alpha)
+    {
+        setPixel(coords, lerp(getPixel(coords),color,alpha));
     }
 
 }

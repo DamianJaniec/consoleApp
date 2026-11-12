@@ -7,4 +7,5 @@
 #include "include/ascii.h"
 #include "include/animation.h"
 #include "include/app.h"
+#include "audio.h"
 

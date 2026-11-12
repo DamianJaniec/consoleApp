@@ -30,13 +30,14 @@ namespace engine
         Vec2i pos;
         int scale = 1;
         bool flipX = false;
+        float opacity = 1.0f;
 
         void draw(Canvas& c) const
         {
             if (!anim || !anim->texture()) return;
             Recti f = anim->frame();
             c.drawTexturePartPx(pos, *anim->texture(), f,
-                                {(flipX ? -1 : 1) * f.w * scale, f.h * scale});
+                                {(flipX ? -1 : 1) * f.w * scale, f.h * scale},opacity);
         }
 
     };

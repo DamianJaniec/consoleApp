@@ -9,7 +9,7 @@
 - [Plany]
 
 ---
-## Opis projektu - 0.3.3
+## Opis projektu - 0.3.4
 Projekt ma na celu, wyciśnięcia z cmd tego co jest możliwe, służąc również jako projekt do samorozwoju.
 
 ## Możliwości
@@ -24,9 +24,19 @@ w stanie uzyskać rysowanie pixelowe
 - Input - rozróżnienie na pojedycze wciśnięcia jak i przytrzymanie klawiszy
 - Zegar - stała dt między klatkami
 - Resize - zmiana rozmiaru okna przez użytkownika jest obsłużona, natomiast, wymuszenie zmianny na windowsie nie jest możliwe
-
+- Log zapis do pliku .txt
+- App szkielet programu, pętal licznik fps, blokada za małego okna
+- Przeźroczysztość/Mieszanie kolorów
+- Menadżer Zasobów - kazdy plik wczytywany raz
 
 ## Ostatnie zmiany
+0.3.4
+- Klasa App, szkieleto programu
+- Menadżer zasobów
+- Kolory - lerp, blend pixel
+- Audio(miniaudio) - odtwarzanie mp3, proste dźwięki
+
+
 0.3.3
 - Wymuszenie resize
 - Utworzenie Log
@@ -84,8 +94,10 @@ aplikacje do momentu aż użytkownik łaskawie zmieniłby rozmiar okna
 ### Polskie znaki, w input
 Tak jak w temacie, zająć się polskimi znakami w input
 
-### Audio
-Poczytać czy wgl możliwe jest jakakolwiek obsługa audio (jakaś musi istnieć) i zastanowić się czy możliwa jest implementacja i jakim kosztem
+### Audio - ciąg dalszy
+- głośność, całości, grup i pojedynczych dźwięków
+- muzyka w pętli
+- "Mumble speech"
 
 #### Pomysły na dalszą przyszłość
 - UI (ramki z unicode ("┌─┐│└┘"))
