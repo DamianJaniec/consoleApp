@@ -23,6 +23,8 @@ namespace engine
         Color colorAt(Vec2i coords) const;
         Color sample(float u, float v) const;
 
+        void makeMissing(); //szachownica magenta/czarna
+
         private:
         bool inBounds(Vec2i coords) const;
 

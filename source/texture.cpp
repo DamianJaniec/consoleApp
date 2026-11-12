@@ -163,4 +163,19 @@ namespace engine
 
         return m_pixels[y * m_size.x + x];
     }
+    void Texture::makeMissing()
+    {
+        m_size = {8,8};
+        m_pixels.assign(64, Color{});
+        m_visible.assign(64, true);
+        bool odd = false;
+
+
+        for(int y=0; y<8; y++)
+            for(int x=0; x<8; x++)
+            {
+                m_pixels[y*8+x] = odd ? Color{255,0,255} : Color{0,0,0};
+                odd = !odd;
+            }
+    }
 }

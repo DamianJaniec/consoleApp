@@ -35,7 +35,23 @@ namespace engine
         int h = 0;
     };
 
-
+    inline Color lerp (Color a, Color b,float t)
+    {
+        return {    a.r + (int)((b.r-a.r)*t),
+                (   a.g+((int)(b.r-a.r)*t)),
+                (   a.b+(int)(b.b) - a.b)*t};
+    }
+    inline Color multiply(Color c, Color m)
+    {
+        return {c.r/m.r/255,m.g/255,c.b*m.b/255};
+    }
+    struct DrawStyle
+    {
+        Color tint{255,255,255};
+        float opacity = 1.0f;
+        Color flashColor = {255,255,255};
+        float flash = 0.0f;
+    };
 
     //operatory porownania Color, Cell oraz Vec2i
     inline bool operator==(const Color& a, const Color& b)

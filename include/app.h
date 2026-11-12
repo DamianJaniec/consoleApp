@@ -4,6 +4,7 @@
 #include "include/canvas.h"
 #include "include/renderer.h"
 #include "include/input.h"
+#include "include/resources.h"
 
 
 //Szkielet programu
@@ -27,6 +28,8 @@ namespace engine
         virtual void onDraw(Canvas& canvas) = 0; //rysowanie co klatke
         virtual void onExit() {} //po wyjsciu z petli
 
+        Resources& resources() {return m_resources;}
+
         //dostep
         Input& input() {return m_input;}
         Terminal& terminal() {return m_terminal;}
@@ -48,10 +51,12 @@ namespace engine
         Input m_input;
         Renderer m_renderer;
         Canvas m_canvas;
+        Resources m_resources;
 
         Vec2i m_minSize;
         bool m_running = false;
         float m_fpsSmooth = 0.0f;
+
 
     };
 }
