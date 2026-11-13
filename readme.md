@@ -9,7 +9,7 @@
 - [Plany]
 
 ---
-## Opis projektu - 0.3.4
+## Opis projektu - 0.3.4.1
 Projekt ma na celu, wyciśnięcia z cmd tego co jest możliwe, służąc również jako projekt do samorozwoju.
 
 ## Możliwości
@@ -28,8 +28,18 @@ w stanie uzyskać rysowanie pixelowe
 - App szkielet programu, pętal licznik fps, blokada za małego okna
 - Przeźroczysztość/Mieszanie kolorów
 - Menadżer Zasobów - kazdy plik wczytywany raz
+- Odtwarzanie plikó mp3
+- Generacja prostych dźwięków
+- "Mumble Speech"
 
 ## Ostatnie zmiany
+0.3.4.1
+- SetVolume - każdy dźwięk osobno
+- Zatrzymanie dźwięku
+- Generowany głos (Talk, Voice)
+- Pominięcie kwesti
+
+
 0.3.4
 - Klasa App, szkieleto programu
 - Menadżer zasobów
@@ -56,9 +66,10 @@ w stanie uzyskać rysowanie pixelowe
 - Tryb pixelowy (Halfblock)
 - Kształty (linia, prostokat, okrag, kolo) - na znakach jak i pixelach
 - Textury rgb
-- Ascii 
+- Ascii
+
+
 0.2.0
-Dodano:
 - Zegar FPS - staly dt
 - Prosty Resize - więcej pod "nowe problemy i cele"
 - Input - kliknięcie, i przytrzymanie
@@ -78,16 +89,13 @@ Wystarczy konsola. (w przypadku win wymagane włączenie wirtualizacji)
 
 ## Znane problemy i decyzje
 
-### Resize
-W przypadku linux nie ma problemu, w przypadku windows problem jest.
-
-Windows domyślnie uruchamia aplikacje w swojej nowej nakładce terminali która blokuje takie kontrolowanie ekranem
-2 opcje (sprawdzić czy możliwe, i ewentualnie konsekwencje)
-- wymusić uruchomienie aplikacji jako conhost
-- poddać się i zaufać użytkownikowi że sam zmieni rozmiar
-Możemy odczytywać rozmiar okna więc, zaufanie polegałoby na tym
-aby wyświetlić wielki napis "ZWIĘKSZ ROZMIAR OKNA" który blokowałby
-aplikacje do momentu aż użytkownik łaskawie zmieniłby rozmiar okna
+- po usuwać wszystkie warningi - trochę się już nazbierało, choć nie ma jeszcze żadnych poważnych błędów, większości to są niedokładne rzutowania (np. int zamiast size_t)
+- do dodanych super funkcjonlaności super obsługi cmd, pododawać logi
+(na obecną chwilę, log się tworzy i wyświetla tylko date rozpoczęcia i zakończenia działania trwania aplikacji)
+(podopisywać logi w przypadkach błędowych np. bład wczytania pliku, nie poprawnie wybrany id Beep'a etc.)
+Będzie to żmudna i długa robota, której na ten moment strasznie mi się nie chce robić - zostawie sobie na koniec
+Albo wrzuce do jakiegoś ai, może chociaż tym razem ta kupa elektrozłomu się na coś przyda i łaskawie zrobi tę katorgę
+za mnie.
 
 ## Plany
 
@@ -95,9 +103,17 @@ aplikacje do momentu aż użytkownik łaskawie zmieniłby rozmiar okna
 Tak jak w temacie, zająć się polskimi znakami w input
 
 ### Audio - ciąg dalszy
-- głośność, całości, grup i pojedynczych dźwięków
-- muzyka w pętli
-- "Mumble speech"
+Mp3, Dźwięki oraz mowa działają poprawnie :)
+Rysowanie w audio też działa, ładnie wypisuje w sposób animowany tekst, zależnie od czasu
+a nie klatek na sekundę itp. to nad czym teraz trzeba się zastanowić to jak obrobić to rysowanie tekstu
+tzn. dobrze byłoby jakieś zawijanie tekstu zrobić, albo żeby tekst jak przejdzie do nowej linijki to się
+nadpisywał, ewentulanie można zrzucić winę na osobe korzystającą z silnika i powiedzieć że wypisanie działa tylko
+w jednej linijce, i jak chce to niech sam sobie nadpisze (nie będzie z tym większego problemu ponieważ, drawText w 
+klasie Talk nie jest uruchamiany w update, więc działa trochę jakby domyyślnie był wyłączony) - wtedy
+trzeba dopisać get'y do ilości pokazanych znaków aby można było jakkolwiek sprawdzić stan wypisanego tekstu
+
+### Wyspać się
+tak jak w temacie
 
 #### Pomysły na dalszą przyszłość
 - UI (ramki z unicode ("┌─┐│└┘"))
