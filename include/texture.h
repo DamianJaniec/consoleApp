@@ -30,7 +30,7 @@ namespace engine
 
         Vec2i m_size;
         std::vector<Color> m_pixels;
-        std::vector<bool> m_visible;
+        //std::vector<bool> m_visible;
     };
 }
 

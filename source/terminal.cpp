@@ -126,16 +126,35 @@ namespace engine
     #endif
     }
 
-    bool Terminal::readByte(char& out)
+    bool Terminal::readByte(char32_t& out)
     {
     #ifdef _WIN32
+        if (m_pending)                        //najpierw oddaj odlozony kod
+        {
+            out = m_pending;
+            m_pending = 0;
+            return true;
+        }
         if (!_kbhit())
             return false;
-        out = static_cast<char>(_getch());
-        if(out ==3) {g_quit = true; return false;} //Ctrl_c
+
+        out = static_cast<char32_t>(_getwch());
+        if (out == 0 || out == 0xE0)          //klawisz specjalny - kod zawsze idzie zaraz za prefiksem
+            m_pending = static_cast<char32_t>(_getwch());   //czekamy na niego od razu, bez _kbhit
         return true;
     #else
-        return read(STDIN_FILENO, &out, 1) == 1;
+        unsigned char b;
+        if(read(STDIN_FILENO, &b,1)!=1) return false;
+
+        std::string s(1,(char)b);
+        int len = b < 0x80 ? 1 : b< 0xE0 ? 2 : b < 0xF0 ? 3 : 4;
+        for(int k = 1; k< len; k++)
+        {
+            char c;
+            if(read(STDIN_FILENO, &c, 1)==1) s+=c;
+        }
+        out = utf8::decode(s)[0];
+        return true;
     #endif
     }
 

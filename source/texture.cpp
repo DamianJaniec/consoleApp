@@ -24,7 +24,7 @@ namespace engine
     {
         m_size = {0,0};
         m_pixels.clear();
-        m_visible.clear();
+        //m_visible.clear();
 
         int w, h, n;
         unsigned char* data = stbi_load(path.c_str(), &w, &h, &n, 4);//rgba
@@ -32,12 +32,12 @@ namespace engine
             return false;
         m_size = {w,h};
         m_pixels.resize(w*h);
-        m_visible.resize(w*h);
+        //m_visible.resize(w*h);
 
         for(int i=0; i<w*h; i++)
         {
-            m_pixels[i] = {data[i*4],data[i*4+1],data[i*4+2]};
-            m_visible[i] = data[i*4 +3] >=128; //pol przexroczyste to juz u nas przexroczyste
+            m_pixels[i] = {data[i*4],data[i*4+1],data[i*4+2],data[i*4+3]};
+            //m_visible[i] = data[i*4 +3] >=128; //pol przexroczyste to juz u nas przexroczyste
         }
         stbi_image_free(data);
         return true;
@@ -47,17 +47,18 @@ namespace engine
     {
         m_size={0,0};
         m_pixels.clear();
-        m_visible.clear();
+        //m_visible.clear();
 
         std::ifstream file(path);
         if(!file)
             return false;
         
-        struct Entry {
+        /*
+            struct Entry {
             Color color;
-            bool visible;
-        };
-        std::unordered_map<char, Entry> palette;
+            //bool visible;
+        };*/
+        std::unordered_map<char, Color> palette;
         std::vector<std::string> image;
 
         bool readingImage = false;
@@ -78,14 +79,16 @@ namespace engine
                 std::string first;
                 ss >> first;
 
-                if(first == "none") palette[key] = {{0,0,0},false}; //none -> przeroczysty
+                if(first == "none") palette[key] = {0,0,0,0}; //none -> przeroczysty
                 else
                 {
                     std::istringstream nums(line.substr(1));
-                    int r, g, b;
-                    if(!(nums >> r >> g >> b))   // nie udalo sie wczytac 3 liczb -> zla linijka
+                    int r, g, b,a;
+                    if(!(nums >> r >> g >> b))   // nie udalo sie wczytac 4 liczb -> zla linijka
                         continue;                // pomijamy ja zamiast wywalac program
-                    palette[key] = {{r,g,b},true};
+                    if(!(nums>>a))
+                        a = 255;
+                    palette[key] = {r,g,b,a};
                 }
                 
             }
@@ -107,8 +110,8 @@ namespace engine
             if((int) row.size() > w) w = (int)row.size();
         
         m_size = {w,h};
-        m_pixels.assign(w*h,Color{});
-        m_visible.assign(w*h,false);
+        m_pixels.assign(w*h,Color{0,0,0,0});
+        //m_visible.assign(w*h,false);
 
         for(int y = 0; y < h; y++)
         {
@@ -123,13 +126,11 @@ namespace engine
                 auto it = palette.find(ch);
                 if(it !=palette.end())
                 {
-                    m_pixels[i] = it->second.color;
-                    m_visible[i] = it->second.visible;
+                    m_pixels[i] = it->second;
                 }
                 else
                 {
                     m_pixels[i] = {255,0,255}; //znak z poza palety
-                    m_visible[i] = true;
                 }
             }
         }
@@ -142,11 +143,11 @@ namespace engine
     bool Texture::visible(Vec2i coords) const
     {
         if(!inBounds(coords)) return false;
-        return m_visible[coords.y * m_size.x + coords.x];
+        return m_pixels[coords.y * m_size.x + coords.x].a;
     }
     Color Texture::colorAt(Vec2i coords) const
     {
-        if(!inBounds(coords)) return {0,0,0};
+        if(!inBounds(coords)) return {0,0,0,0};
         return m_pixels[coords.y * m_size.x + coords.x];
     }
     Color Texture::sample(float u, float v) const
@@ -167,15 +168,9 @@ namespace engine
     {
         m_size = {8,8};
         m_pixels.assign(64, Color{});
-        m_visible.assign(64, true);
-        bool odd = false;
-
-
+        
         for(int y=0; y<8; y++)
             for(int x=0; x<8; x++)
-            {
-                m_pixels[y*8+x] = odd ? Color{255,0,255} : Color{0,0,0};
-                odd = !odd;
-            }
+                m_pixels[y*8+x] = ((x/4 + y/4) % 2) ? Color{255,0,255} : Color{0,0,0};
     }
 }

@@ -22,7 +22,7 @@ namespace engine
         Terminal& operator = (const Terminal&) = delete;
 
         Vec2i size() const; //rozmiar okna
-        bool readByte(char &out); //funkcja analogiczna do kbhit, ale uniwersalna dla win oraz linux
+        bool readByte(char32_t &out); //funkcja analogiczna do kbhit, ale uniwersalna dla win oraz linux
         void flush(); //wypachanie bufora na ekran
 
         void requestSize(Vec2i s); //Fizyczny rozmiar okna, to co widac
@@ -34,6 +34,8 @@ namespace engine
             DWORD m_oldOutMode = 0;
             DWORD m_oldInMode = 0;
             UINT  m_oldCodePage = 0;
+            
+            char32_t m_pending = 0;
         #else
             termios m_oldSettings{};
         #endif

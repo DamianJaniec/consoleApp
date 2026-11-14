@@ -9,7 +9,7 @@
 - [Plany]
 
 ---
-## Opis projektu - 0.3.4.1
+## Opis projektu - 0.3.4.2
 Projekt ma na celu, wyciśnięcia z cmd tego co jest możliwe, służąc również jako projekt do samorozwoju.
 
 ## Możliwości
@@ -33,6 +33,11 @@ w stanie uzyskać rysowanie pixelowe
 - "Mumble Speech"
 
 ## Ostatnie zmiany
+0.3.4.2
+- Przeźroczystość dla wszystkich figur, i rysunkow (nie tylko png)
+- Input (polskie znaki), wiecej znakow specjalnych
+
+
 0.3.4.1
 - SetVolume - każdy dźwięk osobno
 - Zatrzymanie dźwięku
@@ -111,9 +116,6 @@ nadpisywał, ewentulanie można zrzucić winę na osobe korzystającą z silnika
 w jednej linijce, i jak chce to niech sam sobie nadpisze (nie będzie z tym większego problemu ponieważ, drawText w 
 klasie Talk nie jest uruchamiany w update, więc działa trochę jakby domyyślnie był wyłączony) - wtedy
 trzeba dopisać get'y do ilości pokazanych znaków aby można było jakkolwiek sprawdzić stan wypisanego tekstu
-
-### Wyspać się
-tak jak w temacie
 
 #### Pomysły na dalszą przyszłość
 - UI (ramki z unicode ("┌─┐│└┘"))

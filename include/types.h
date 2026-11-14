@@ -9,6 +9,7 @@ namespace engine
         int r = 0;
         int g = 0;
         int b = 0;
+        int a = 255; // od 0 do 255
     };
     struct Vec2
     {
@@ -49,7 +50,7 @@ namespace engine
     //operatory porownania Color, Cell oraz Vec2i
     inline bool operator==(const Color& a, const Color& b)
     {
-        return a.r == b.r && a.g == b.g && a.b == b.b;
+        return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
     }
     inline bool operator!=(const Color& a, const Color& b) { return !(a == b); }
 
@@ -64,4 +65,6 @@ namespace engine
         return a.x == b.x && a.y == b.y;
     }
     inline bool operator!=(const Vec2i& a, const Vec2i& b) {return !(a ==b );}
+
+    
 }

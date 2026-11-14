@@ -34,6 +34,13 @@ namespace engine
     {
         if(!inBounds(coords))
             return;
+        if(!inBounds(coords))
+            return;
+        Cell& old = cells[coords.y * size.x + coords.x];
+        if(c.fg.a < 255) c.fg = lerp(old.fg,c.fg,c.fg.a / 255.0f);
+        if(c.bg.a < 255) c.bg = lerp(old.bg,c.bg,c.bg.a/255.0f);
+        old = c;
+        
         cells[coords.y * size.x + coords.x] = c;
     }
     Cell Canvas::getCell(Vec2i coords) const
@@ -208,6 +215,11 @@ namespace engine
     {
         if(!pixelInBounds(coords))
             return;
+        if(color.a <= 0)
+            return;
+
+        if(color.a < 255)
+            color = lerp(getPixel(coords),color,color.a/255.0f);
         
         Cell &cell = cells[(coords.y / 2) * size.x + coords.x];
 

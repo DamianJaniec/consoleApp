@@ -9,4 +9,5 @@
 #include "include/app.h"
 #include "include/audio.h"
 #include "include/voice.h"
+#include "include/utf8.h"
 
